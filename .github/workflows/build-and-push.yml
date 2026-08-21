@@ -51,7 +51,7 @@ jobs:
           ./mvnw clean verify
 
       # ----------------------------------------------------
-      # 4. Debug GitHub context
+      # 4. Verify GitHub context
       # ----------------------------------------------------
 
       - name: Verify GitHub context
@@ -60,14 +60,20 @@ jobs:
           echo "Ref: $GITHUB_REF"
           echo "Branch: $GITHUB_REF_NAME"
           echo "Event: $GITHUB_EVENT_NAME"
-            - name: Verify AWS role configuration
+
+      # ----------------------------------------------------
+      # 5. Verify AWS role configuration
+      # ----------------------------------------------------
+
+      - name: Verify AWS role configuration
         env:
           AWS_ROLE_ARN: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE_ARN }}
-          run: |
-            echo "AWS role configured: ${AWS_ROLE_ARN:0:25}..."
-            echo "Role account: ${AWS_ROLE_ARN:13:12}"
+        run: |
+          echo "AWS role configured: ${AWS_ROLE_ARN:0:25}..."
+          echo "Role account: ${AWS_ROLE_ARN:13:12}"
+
       # ----------------------------------------------------
-      # 5. Configure AWS using GitHub OIDC
+      # 6. Configure AWS using GitHub OIDC
       # ----------------------------------------------------
 
       - name: Configure AWS credentials
@@ -77,7 +83,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       # ----------------------------------------------------
-      # 6. Verify AWS identity
+      # 7. Verify AWS identity
       # ----------------------------------------------------
 
       - name: Verify AWS identity
@@ -85,7 +91,7 @@ jobs:
           aws sts get-caller-identity
 
       # ----------------------------------------------------
-      # 7. Login to Amazon ECR
+      # 8. Login to Amazon ECR
       # ----------------------------------------------------
 
       - name: Login to Amazon ECR
@@ -93,7 +99,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       # ----------------------------------------------------
-      # 8. Build Docker image
+      # 9. Build Docker image
       # ----------------------------------------------------
 
       - name: Build Docker image
@@ -106,7 +112,7 @@ jobs:
             ./demo-app
 
       # ----------------------------------------------------
-      # 9. Scan Docker image with Trivy
+      # 10. Scan Docker image with Trivy
       # ----------------------------------------------------
 
       - name: Scan Docker image with Trivy
@@ -119,7 +125,7 @@ jobs:
           severity: CRITICAL,HIGH
 
       # ----------------------------------------------------
-      # 10. Push image to ECR
+      # 11. Push image to ECR
       # ----------------------------------------------------
 
       - name: Push Docker image
