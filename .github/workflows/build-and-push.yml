@@ -60,7 +60,12 @@ jobs:
           echo "Ref: $GITHUB_REF"
           echo "Branch: $GITHUB_REF_NAME"
           echo "Event: $GITHUB_EVENT_NAME"
-
+            - name: Verify AWS role configuration
+        env:
+          AWS_ROLE_ARN: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE_ARN }}
+          run: |
+            echo "AWS role configured: ${AWS_ROLE_ARN:0:25}..."
+            echo "Role account: ${AWS_ROLE_ARN:13:12}"
       # ----------------------------------------------------
       # 5. Configure AWS using GitHub OIDC
       # ----------------------------------------------------
