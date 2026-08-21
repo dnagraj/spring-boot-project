@@ -1,0 +1,25 @@
+# Maven
+demo-app/target/
+
+# Maven Wrapper
+# Keep mvnw and mvnw.cmd tracked
+
+# IDE
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+*.env
+application-local.properties
+application-prod.properties
