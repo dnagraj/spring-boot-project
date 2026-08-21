@@ -58,7 +58,7 @@ jobs:
           docker build -t "$REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" .
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: '${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}'
           format: table
